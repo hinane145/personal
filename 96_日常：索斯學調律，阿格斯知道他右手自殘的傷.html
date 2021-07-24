@@ -1,0 +1,1678 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>神豬窩呵呵 - trpg-破曉者-房間</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.325em;
+    height: 1.325em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+    pointer-events: none;
+}
+
+.chatlog__reference-content > a:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > .emoji {
+    width: 1.325em;
+    height: 1.325em;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    vertical-align: middle;
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__embed-youtube-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-youtube {
+    border: 0;
+    border-radius: 3px;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #5865F2;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #00aff4;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* Preamble */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: #202225;
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: #dcddde;
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: #dcddde;
+}
+
+.chatlog__embed-footer {
+    color: #dcddde;
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/491255414969860106/a_0e92980604d0a6ca4df3b67773c3a600.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">神豬窩呵呵</div>
+        <div class="preamble__entry">trpg-破曉者 / trpg-破曉者-房間</div>
+
+
+            <div class="preamble__entry preamble__entry--small">
+After 18-Jul-21 01:00 AM            </div>
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="866015169355055104" id="message-866015169355055104" title="Message sent: 18-Jul-21 01:55 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">================</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(52,152,219)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jul-21 01:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="866015173541625877" id="message-866015173541625877" title="Message sent: 18-Jul-21 01:55 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Hina#5696">@Hina</span>
+2D100&lt;=30：狄索斯：學習-調律
+84[10+74]&lt;=30 = 失敗</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="866015865836797992" id="message-866015865836797992" title="Message sent: 18-Jul-21 01:57 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Hina#5696">@Hina</span>
+1D100&lt;=41：狄索斯：手工藝(編織)
+59[59]&lt;=41 = 失敗</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 02:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="866022257150787635" id="message-866022257150787635" title="Message sent: 18-Jul-21 02:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><a href="https://www.youtube.com/watch?v=UPVoeWOokz8">https://www.youtube.com/watch?v=UPVoeWOokz8</a></span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(255,0,0,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://www.youtube.com/channel/UC1RG7m8FwFKgB3IpfN3ccew">힐링트리뮤직 Healing Tree Music &amp; Sounds</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://www.youtube.com/watch?v=UPVoeWOokz8">
+                                                    <div class="markdown preserve-whitespace">3시간 아름답고 편안한 켈틱음악 <img class="emoji " alt="🎵" title="musical_note" src="https://twemoji.maxcdn.com/2/svg/1f3b5.svg"> 힐링음악, 스트레스해소음악, 아침명상음악, 요가음악(Home)</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-youtube-container">
+                                            <iframe class="chatlog__embed-youtube" src="https://www.youtube.com/embed/UPVoeWOokz8" width="400" height="225"></iframe>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="866022812099936256" id="message-866022812099936256" title="Message sent: 18-Jul-21 02:25 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">破曉者，深夜
+
+虛渺的月光渲染著夜幕，將那深邃無盡的黑染出一道微弱明暗的漸層
+
+但那銀光不如朝日的金光那般耀眼
+
+只是倚靠著夜晚的黑對比出它的白
+只是假借著太陽的光生硬的撐起亮
+
+直至地表，那銀光已黯淡到近乎看不清，但就算如此它仍努力透過窗，想灑進破曉者別棟的木造房
+
+.....
+
+實在勉強
+
+
+相比那黯淡的銀月
+那晚間的風吹的實在喧囂
+
+轟隆轟隆、鏘咚鏘咚...
+
+吹的那僅剩的銀色帷幕飄渺到只剩虛象
+
+伴隨著那逐漸淡薄灰暗的虛象，楚河漢界的一頭響起輕盈悠然的哼唱...
+
+金髮精靈坐在桌前，嘴裡以音符穿過銀月薄紗，手頭則以勾針將植物纖維層層交錯編織
+
+在動人的聲弦穿插下，
+虛渺的銀月也能成為穩固的實光吧
+
+在細膩的勾針編織下，
+暗藏的祈願也能逐步構築成形吧
+
+撲通撲通、怦咚怦咚...
+
+風的喧囂此時在樂音的共振下逐漸恢復規律
+只可惜作業執行到一半，那忙碌的手還是疲憊的放下
+
+精靈低著頭，闔著眼
+髮絲無力的垂落至桌面
+
+維持著端坐的姿勢，手定格在好不容易能看出貓頭鷹形體的編織物上頭...
+
+就這樣悄然無息的睡著......</span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jul-21 02:54 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 02:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="866029385722888233" id="message-866029385722888233" title="Message sent: 18-Jul-21 02:51 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">過了多久，無從得知
+
+書寫聲在寂靜的夜裡格外明顯
+控制指頭，輕緩勾起襯托字體的弧線，只為讓肅殺的文字能有一絲圓滑
+
+白紙黑字於他記憶中更多的是斬釘截鐵的噩耗、不留情面的宣告、毫無仁慈的殺伐裁決
+
+放下筆墨，輕灑上粉末並等待，期望著只需書寫情意與思念的日子能早點到來
+
+明早在麻煩貓頭鷹寄送出這簡短的回覆，他後靠著椅背，一如往常的試著按壓眉間好舒緩壓力與煩悶，就算只是短暫也好，渴望著
+
+........突然意識到過於安靜的環境，令人不安
+.....平時應該會有的胡鬧惡作劇呢?
+...怎麼好像連氣息都很微弱?
+不會是又用了什麼魔法!?
+
+可惜了這一瞬間的慌忙，如果界線的另一端的人還醒著，這會是很好借題發揮的素材
+
+阿格斯收起慌張無聲的神情，雙手掩面抹過臉龐，打消對方可能在計畫著什麼的想法，轉身回頭，確認人還在位置上，沒有消失也沒有變成別的樣子，或是正試著把什麼東西偷偷放在自己頭上，只是.....
+
+阿格斯:「......?」挑眉疑惑
+
+起身時避免拖拉椅子所發出的聲響，擺放好文書後毫不猶豫的跨過界線，彎身觀察著睡去的金髮精靈
+
+阿格斯:「.......(睡著了?)」手放於下巴，直盯著狄索斯
+
+一手拿起懷錶並以另一手緊壓，只留開啟卡槽的細微聲響，阿格斯查看時間後又將其闔上
+
+阿格斯:「要睡就躺好」手指捏起金髮的末梢，輕聲說著</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 03:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="866031904292864040" id="message-866031904292864040" title="Message sent: 18-Jul-21 03:01 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">精靈沒有回應，只是靜靜的握著勾針穿過另手拿著的貓頭鷹小飾品上
+
+就算原本真有什麼企圖接在黑髮人類跨越界線的那一瞬間宣告失敗失效
+
+哎呀，難得的驚喜就這麼被破壞了呢
+
+......如果還醒著的話
+精靈肯定是帶著如此戲鬧的語氣說著吧
+
+哎呀呀...
+真的........好可惜呢..........
+
+....趴搭
+
+精靈的身子緩緩向前彎
+最後整個身體終於不堪負重的倒在桌面上</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 03:11 AM</span>
+
+            <div class="chatlog__message " data-message-id="866034461489496084" id="message-866034461489496084" title="Message sent: 18-Jul-21 03:11 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「唉......傷腦筋」
+
+收拾好桌面上的物品，一手環抱起趴倒的金髮精靈，另一手將其抓握著的勾針給放下，接著施力讓對方的手拉抬並掛在自己的脖頸，以肩輕頂起精靈輕盈的身軀
+
+也不管是否會驚擾這難得提前睏睡的同伴，漫步扛著他往床鋪而去
+
+阿格斯:「........(這樣都還不醒?)」低頭看向垂落金髮而遮蓋臉龐的狄索斯
+
+也是，剛才都整個人趴倒在硬梆梆的桌面都沒醒來了
+
+聳聳肩，調整動作後讓空下的一手幫忙解開扣子，脫下手套等任何可能妨礙睡眠的衣物，然而在把狄索斯手套稍稍掀開的時候，阿格斯將手收回，又按壓了按眉間....</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 03:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="866041862212157450" id="message-866041862212157450" title="Message sent: 18-Jul-21 03:41 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">拉開如今日夜幕一般漆黑的手套
+虛渺的銀月便已足以將上頭的真實揭示
+
+一道道鮮紅的傷疤層層堆砌在上頭
+已數不清到底推砌了幾層
+只能確定最新的痕跡是在不久之前刻上
+
+荊棘圓環中心一滴淚
+
+鮮明的圖樣已說明了一切
+不是意外、不是遇襲
+
+而是精靈自己親手烙上的傷
+
+..........
+
+在失去意識的瞬間全身壟罩的幻皮偽裝也一同褪去
+
+失去血色的面容慘淡無力且冰冷寒寂....
+反之那飽食鮮血的手套則散出濃烈的鐵銹味........
+
+濃的激起精靈的防備
+逼得他睜開眼，在朦朧的意識下收起右手以左手遮掩
+
+狄索斯：「......哎呀」看向床邊的阿格斯，再次撐起微笑，並將縮回的手藏到被底
+狄索斯：「...怎麼？主動越界是不是代表哥哥你終於接受我了呢～」再次開啟一如往常的玩笑</span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jul-21 03:56 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 03:47 AM</span>
+
+            <div class="chatlog__message " data-message-id="866043487011209236" id="message-866043487011209236" title="Message sent: 18-Jul-21 03:47 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">黑髮人類將臉湊近金髮精靈，陰影讓他的雙眼更加嚴肅而凝重，眉宇間彷彿透露出無形的怒火
+
+背對著光，配合不知是壓力還是情緒影響而低沉的聲音說道
+
+阿格斯:「不要再增加傷口了」
+
+話語中那一股銳利是如此真實，就像冰涼的刀抵在喉頭，但此時抵在那的是發著微光的食指</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(52,152,219)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jul-21 03:48 AM</span>
+
+            <div class="chatlog__message " data-message-id="866043798819045386" id="message-866043798819045386" title="Message sent: 18-Jul-21 03:48 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="KapCat#4613">@KapCat</span>
+1D100&lt;=80：阿格斯:光明-平靜專注
+75[75]&lt;=80 = 成功</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 03:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="866045319079133204" id="message-866045319079133204" title="Message sent: 18-Jul-21 03:54 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">狄索斯：「...傷口？」微微將身體撐起，偏著頭假裝疑惑的說著
+
+狄索斯：「哎呀...？哥哥該不會說的是這個吧？」提起右手，將傷口擺在阿格斯面前
+
+狄索斯：「沒事沒事～年輕人總會想嘗試新鮮的事物～這只是刺青藝術罷了～～」左手摸著右手那片凹凸不平的傷，指尖微微沾上些許的血漬
+
+狄索斯：「...原來還沒乾呢」看著左手沾上的血，帶著冰冷淡然的笑容說著</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="866047047709622293" id="message-866047047709622293" title="Message sent: 18-Jul-21 04:01 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「......」
+
+食指向前，手掌順勢貼向金髮精靈的脖子，用力地將其按倒在床鋪，後來的話語中沒有一絲一毫的妥協
+
+阿格斯:「不要再增加傷口了，我不是在說笑」鬆開手，拉把椅子坐在床鋪旁
+
+他刻意前傾身子讓背光的陰影看來更深沉，雙手交握至於嘴前，手肘靠在膝上，一臉生氣的模樣
+
+事實上他是很生氣，但氣的是自己無能為力
+
+阿格斯:「還有力氣治療自己的傷口嗎?」
+
+隨嘆氣聲後的還是妥協了</span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jul-21 04:03 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="866047758552530955" id="message-866047758552530955" title="Message sent: 18-Jul-21 04:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">狄索斯：「當然～」傾臉笑得燦爛，接著將左手再次貼到右手上頭，嘴裡輕輕開始哼唱</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(52,152,219)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jul-21 04:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="866047844850073640" id="message-866047844850073640" title="Message sent: 18-Jul-21 04:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Hina#5696">@Hina</span>
+1D100&lt;=80：狄索斯：歐忒耳佩-「春」
+26[26]&lt;=80 = 成功</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:17 AM</span>
+
+            <div class="chatlog__message " data-message-id="866050891430100995" id="message-866050891430100995" title="Message sent: 18-Jul-21 04:17 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">輕盈的歌聲從精靈嘴中響起
+乾淨、透明、皎潔、明亮
+溫暖、平穩、柔和、平順
+
+不同於雕刻在手臂上淚痕
+歌聲沒有夾帶任何一絲的悲傷
+
+破開的刀口在如春般暖和的樂音下緩緩癒合
+然而鮮血卻在荊棘癒合的瞬間從破口被擠出滑下
+
+被按倒在床鋪上的精靈老老實實地躺著
+
+以左手指尖輕輕拾起血淚
+嘴裡仍勾著笑意看著它
+
+狄索斯：「.....我還以為是阿格斯哥哥的話，肯定明白呢」
+
+狄索斯：「世界有太多太多悲傷、有太多太多傷口～」
+狄索斯：「.....總要找個地方記下～」看著指尖那從自己肉體流出的血緩緩滴落至被單上，事不關己的說著</span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jul-21 04:20 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:22 AM</span>
+
+            <div class="chatlog__message " data-message-id="866052335749562429" id="message-866052335749562429" title="Message sent: 18-Jul-21 04:22 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「我明白跟你明白是兩回事，狄索斯」
+
+伸長手拉過自己的被單，自顧自地將那沾染紅血置換回潔白
+
+阿格斯:「下次改用別的方式記錄這些悲天憫人，明白?」挑眉詢問</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="866053711352692757" id="message-866053711352692757" title="Message sent: 18-Jul-21 04:28 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">精靈笑笑地看著對方幫自己換過潔白的被單後，接著繼續說
+
+狄索斯：「有阿～為了找其他方法....我可努力了呢～」伸出滿臂傷疤的右手，反手平攤，遞出那編織到一半的貓頭鷹小飾品
+
+狄索斯：「只是想奉獻的對象總是苦著臉皺著眉拒絕呢....」左手扶著臉假裝苦惱地說著</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:43 AM</span>
+
+            <div class="chatlog__message " data-message-id="866057633404289044" id="message-866057633404289044" title="Message sent: 18-Jul-21 04:43 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「....」無奈地苦笑，接過已經不知是第幾隻貓頭鷹禮物
+
+滿是粗繭的手撫過圓滾如蘋果一樣的鳥首，回想起自己喜好這種生物的理由是多麼單純
+
+他們能看到很寬廣的角度
+他們能聽到深雪裡的動靜
+他們陪伴著疑心重的自己
+
+阿格斯:「...我收下了，這已經是很好的禮物，現在趕緊睡」
+
+空著的另一手輕拂過精靈的金髮，順著往頭頂而去，輕拍後便起身，將椅子拉回界線之中
+
+阿格斯坐回自己的位置上，查看信件的墨水是否已經乾了
+
+面朝光，後背的陰影使其看來疲憊、逞強，肩膀不能放鬆的樣貌依舊
+
+書寫聲又響起</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="866059858959925269" id="message-866059858959925269" title="Message sent: 18-Jul-21 04:52 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">光耀眼的從另一頭越界照過來，精靈側躺著看著....，看著光，看著影，更看著那身纏國務、背負百姓期待的那位大人
+
+怎麼睡得著
+
+狄索斯：「....」
+狄索斯：「還擔心我呢...明明最該需要休息放鬆的是您呢～」再次扶起身子，翻身下床，拿起置於桌邊的弓形樂器拖在手邊放好</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(52,152,219)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jul-21 04:53 AM</span>
+
+            <div class="chatlog__message " data-message-id="866059956011925524" id="message-866059956011925524" title="Message sent: 18-Jul-21 04:53 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Hina#5696">@Hina</span>
+1D100&lt;=80：狄索斯：歐忒耳佩-「秋」
+63[63]&lt;=80 = 成功</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="866060490291019837" id="message-866060490291019837" title="Message sent: 18-Jul-21 04:55 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「你要是打算彈或唱，我就把那個搶過來」聽著身後的動靜，語氣嚴厲地說道
+
+將信件對折並等待蠟滴於上頭，蓋好封蠟之後開始書寫下一張</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 04:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="866061082615480350" id="message-866061082615480350" title="Message sent: 18-Jul-21 04:57 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">見對方嚴厲的警告，精靈沒有停下彈奏
+
+狄索斯：「....怎麼這麼說呢，這可是在下所剩不多的消遣了呢....」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(52,152,219)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jul-21 04:57 AM</span>
+
+            <div class="chatlog__message " data-message-id="866061088918732830" id="message-866061088918732830" title="Message sent: 18-Jul-21 04:57 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Hina#5696">@Hina</span>
+1D100&lt;=80：狄索斯：歐忒耳佩-「冬」
+98[98]&lt;=80 = 失敗</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/167459903814762497/25da7763313ac62827d2ccca1ea88571.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Hina#5696" data-user-id="167459903814762497" style="color: rgb(230,126,34)">Hina</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 05:19 AM</span>
+
+            <div class="chatlog__message " data-message-id="866066577820745739" id="message-866066577820745739" title="Message sent: 18-Jul-21 05:19 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">坐於桌邊，指尖來回輕盈的撥弄琴弦，任性的持續彈奏一段又一段的樂章
+
+春天新生的枝枒柔的使人恢復生氣
+秋天轉紅的落葉美的使人放鬆身心
+冬季靜謐的雪地寂的使人凝神專注
+飽含四季意象的樂曲連結著光壟罩在這間小小的木造房
+
+精靈毫不顧對方，自顧自地唱阿唱
+
+不斷的歌頌愛與美好，拼命地散播樂與歡笑
+因為他知道，自己剩餘生命的意義僅為傳唱光明與希望
+
+不斷的奏著樂音、不斷的釋著歌曲
+
+直到榨乾自己身上所有魔力
+才終於妥協一般的昏睡過去........
+
+狄索斯：「......」
+
+坐於桌邊，雙手從樂器中脫力放下
+
+趴搭一聲
+
+再次側倒在桌面上</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/491255494971752449/2e9480d5fbeef32adc84bda7fa63499f.png?size=40" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="KapCat#4613" data-user-id="491255494971752449" style="color: rgb(230,126,34)">KapCat</span>
+
+
+        <span class="chatlog__timestamp">18-Jul-21 05:34 AM</span>
+
+            <div class="chatlog__message " data-message-id="866070340831543327" id="message-866070340831543327" title="Message sent: 18-Jul-21 05:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">阿格斯:「........」轉頭，一臉厭世的看著&quot;又&quot;倒下的金髮精靈
+
+又重複了一次大概幾分鐘前的動作，這次更輕柔一些，同時祈禱內心的碎念不要被任何人聽見
+
+替對方蓋好被子，拾起那把自己揚言要搶走的樂器，翻轉把玩一下並細細欣賞精緻的做工，才輕放在床頭
+
+打開查看另一只懷錶，阿格斯轉動錶側的旋鈕，調整細節的指針，那是他用來記錄日期的錶
+
+就這樣又過了一日了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="866070485715255296" id="message-866070485715255296" title="Message sent: 18-Jul-21 05:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">================</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 27 message(s)</div>
+</div>
+
+</body>
+
+</html>
